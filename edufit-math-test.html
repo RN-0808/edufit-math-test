@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Edu Fit 数学入塾テスト（オンライン版）</title>
+
+  <!-- 数式表示用 MathJax 設定 -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -41,12 +50,6 @@
       margin-bottom: 4px;
       cursor: pointer;
     }
-    .correct-answer {
-      background-color: #e5ffe9;
-    }
-    .wrong-answer {
-      background-color: #ffe5e5;
-    }
     .buttons {
       margin-top: 16px;
       display: flex;
@@ -67,14 +70,16 @@
       background-color: #6c757d;
       color: #ffffff;
     }
-    .result {
-      margin-top: 16px;
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
     .note {
       font-size: 0.9rem;
       color: #555;
+    }
+    .name-input {
+      margin-top: 8px;
+    }
+    .name-input input {
+      padding: 4px 8px;
+      font-size: 0.95rem;
     }
   </style>
 </head>
@@ -84,156 +89,169 @@
   <div class="intro">
     <p>このページは、Edu Fit 数学入塾テストをオンラインで解いて、その場で採点できる簡単なアプリです。</p>
     <ul>
-      <li>全10問・6択式</li>
+      <li>全10問・6択式（各10点、100点満点）</li>
       <li>解き終わったら「採点する」ボタンを押してください。</li>
-      <li>正解した問題は <span style="background:#e5ffe9;">薄い緑</span>、不正解は <span style="background:#ffe5e5;">薄い赤</span> で表示されます。</li>
+      <li>採点後は結果ページに移動し、正解・不正解の一覧と点数が表示されます。</li>
     </ul>
+    <div class="name-input">
+  受験者名：
+  <input
+    type="text"
+    id="studentName"
+    placeholder="氏名を入力してください"
+    required
+  >
+    </div>
   </div>
 
   <!-- Q1 -->
   <div class="question" data-question="1">
     <h2>第1問</h2>
     <p>次の計算をしなさい。</p>
-    <p>\((-2/3)^2 \div (1/6 - 1/2) + 5/3\)</p>
+    <p>\(\left(-\frac{2}{3}\right)^{2} \div \left(\frac{1}{6} - \frac{1}{2}\right) + \frac{5}{3}\)</p>
     <div class="options">
-      <label><input type="radio" name="q1" value="ア" data-correct="true"> ア　1/3</label>
-      <label><input type="radio" name="q1" value="イ"> イ　2/3</label>
-      <label><input type="radio" name="q1" value="ウ"> ウ　1</label>
-      <label><input type="radio" name="q1" value="エ"> エ　4/3</label>
-      <label><input type="radio" name="q1" value="オ"> オ　5/3</label>
-      <label><input type="radio" name="q1" value="カ"> カ　2</label>
+      <label><input type="radio" name="q1" data-correct="true"> ア　\(\frac{1}{3}\)</label>
+      <label><input type="radio" name="q1"> イ　\(\frac{2}{3}\)</label>
+      <label><input type="radio" name="q1"> ウ　\(1\)</label>
+      <label><input type="radio" name="q1"> エ　\(\frac{4}{3}\)</label>
+      <label><input type="radio" name="q1"> オ　\(\frac{5}{3}\)</label>
+      <label><input type="radio" name="q1"> カ　\(2\)</label>
     </div>
   </div>
 
   <!-- Q2 -->
   <div class="question" data-question="2">
     <h2>第2問</h2>
-    <p>x = 3, y = -2 のとき、次の式の値を求めなさい。</p>
-    <p>(2x - 3y) - 3(x - 2y)</p>
+    <p>次の式の値を求めなさい。（\(x = 3,\ y = -2\)）</p>
+    <p>\((2x - 3y) - 3(x - 2y)\)</p>
     <div class="options">
-      <label><input type="radio" name="q2" value="ア"> ア　-15</label>
-      <label><input type="radio" name="q2" value="イ"> イ　-12</label>
-      <label><input type="radio" name="q2" value="ウ" data-correct="true"> ウ　-9</label>
-      <label><input type="radio" name="q2" value="エ"> エ　3</label>
-      <label><input type="radio" name="q2" value="オ"> オ　9</label>
-      <label><input type="radio" name="q2" value="カ"> カ　15</label>
+      <label><input type="radio" name="q2"> ア　\(-15\)</label>
+      <label><input type="radio" name="q2"> イ　\(-12\)</label>
+      <label><input type="radio" name="q2" data-correct="true"> ウ　\(-9\)</label>
+      <label><input type="radio" name="q2"> エ　\(3\)</label>
+      <label><input type="radio" name="q2"> オ　\(9\)</label>
+      <label><input type="radio" name="q2"> カ　\(15\)</label>
     </div>
   </div>
 
   <!-- Q3 -->
   <div class="question" data-question="3">
     <h2>第3問</h2>
-    <p>連立方程式を解いたときの x の値を求めなさい。</p>
+    <p>次の連立方程式を解いたとき、\(x\) の値を求めなさい。</p>
     <p>
-      3x - 2y = 1<br>
-      5x + 3y = 8
+      \[
+      \begin{cases}
+        3x - 2y = 1 \\
+        5x + 3y = 8
+      \end{cases}
+      \]
     </p>
     <div class="options">
-      <label><input type="radio" name="q3" value="ア"> ア　-1</label>
-      <label><input type="radio" name="q3" value="イ" data-correct="true"> イ　1</label>
-      <label><input type="radio" name="q3" value="ウ"> ウ　2</label>
-      <label><input type="radio" name="q3" value="エ"> エ　3</label>
-      <label><input type="radio" name="q3" value="オ"> オ　4</label>
-      <label><input type="radio" name="q3" value="カ"> カ　5</label>
+      <label><input type="radio" name="q3"> ア　\(-1\)</label>
+      <label><input type="radio" name="q3" data-correct="true"> イ　\(1\)</label>
+      <label><input type="radio" name="q3"> ウ　\(2\)</label>
+      <label><input type="radio" name="q3"> エ　\(3\)</label>
+      <label><input type="radio" name="q3"> オ　\(4\)</label>
+      <label><input type="radio" name="q3"> カ　\(5\)</label>
     </div>
   </div>
 
   <!-- Q4 -->
   <div class="question" data-question="4">
     <h2>第4問</h2>
-    <p>関数 y = -2x + 5 について、x の変域が -1 ≤ x &lt; 4 のとき、y の変域として正しいものを選択しなさい。</p>
+    <p>関数 \(y = -2x + 5\) について、\(-1 \le x &lt; 4\) のとき、\(y\) の変域として正しいものを選択しなさい。</p>
     <div class="options">
-      <label><input type="radio" name="q4" value="ア" data-correct="true"> ア　-3 &lt; y ≤ 7</label>
-      <label><input type="radio" name="q4" value="イ"> イ　-3 ≤ y &lt; 7</label>
-      <label><input type="radio" name="q4" value="ウ"> ウ　-3 &lt; y &lt; 7</label>
-      <label><input type="radio" name="q4" value="エ"> エ　-3 ≤ y ≤ 7</label>
-      <label><input type="radio" name="q4" value="オ"> オ　-1 ≤ y &lt; 4</label>
-      <label><input type="radio" name="q4" value="カ"> カ　4 &lt; y ≤ 7</label>
+      <label><input type="radio" name="q4" data-correct="true"> ア　\(-3 &lt; y \le 7\)</label>
+      <label><input type="radio" name="q4"> イ　\(-3 \le y &lt; 7\)</label>
+      <label><input type="radio" name="q4"> ウ　\(-3 &lt; y &lt; 7\)</label>
+      <label><input type="radio" name="q4"> エ　\(-3 \le y \le 7\)</label>
+      <label><input type="radio" name="q4"> オ　\(-1 \le y &lt; 4\)</label>
+      <label><input type="radio" name="q4"> カ　\(4 &lt; y \le 7\)</label>
     </div>
   </div>
 
   <!-- Q5 -->
   <div class="question" data-question="5">
     <h2>第5問</h2>
-    <p>関数 y = ax^2 のグラフが、点 (3, -18) を通るとき、この関数の x の変域が -2 ≤ x ≤ 1 のときの y の変域として正しいものを選択しなさい。</p>
+    <p>関数 \(y = a x^{2}\) のグラフが、点 \((3,-18)\) を通るとき、この関数の \(x\) の変域が \(-2 \le x \le 1\) のときの \(y\) の変域として正しいものを選択しなさい。</p>
     <div class="options">
-      <label><input type="radio" name="q5" value="ア" data-correct="true"> ア　-8 ≤ y ≤ 0</label>
-      <label><input type="radio" name="q5" value="イ"> イ　-8 ≤ y ≤ -2</label>
-      <label><input type="radio" name="q5" value="ウ"> ウ　-18 ≤ y ≤ 0</label>
-      <label><input type="radio" name="q5" value="エ"> エ　-18 ≤ y ≤ -2</label>
-      <label><input type="radio" name="q5" value="オ"> オ　-2 ≤ y ≤ 0</label>
-      <label><input type="radio" name="q5" value="カ"> カ　0 ≤ y ≤ 8</label>
+      <label><input type="radio" name="q5" data-correct="true"> ア　\(-8 \le y \le 0\)</label>
+      <label><input type="radio" name="q5"> イ　\(-8 \le y \le -2\)</label>
+      <label><input type="radio" name="q5"> ウ　\(-18 \le y \le 0\)</label>
+      <label><input type="radio" name="q5"> エ　\(-18 \le y \le -2\)</label>
+      <label><input type="radio" name="q5"> オ　\(-2 \le y \le 0\)</label>
+      <label><input type="radio" name="q5"> カ　\(0 \le y \le 8\)</label>
     </div>
   </div>
 
   <!-- Q6 -->
   <div class="question" data-question="6">
     <h2>第6問</h2>
-    <p>1つのサイコロを2回投げるとき、1回目に出た目を a、2回目に出た目を b とする。このとき、点 (a, b) が直線 y = -x + 7 上にある確率を求めなさい。</p>
+    <p>1つのサイコロを2回投げるとき、1回目に出た目を \(a\)、2回目に出た目を \(b\) とする。このとき、点 \((a,b)\) が直線 \(y = -x + 7\) 上にある確率を求めなさい。</p>
     <div class="options">
-      <label><input type="radio" name="q6" value="ア"> ア　1/12</label>
-      <label><input type="radio" name="q6" value="イ"> イ　1/9</label>
-      <label><input type="radio" name="q6" value="ウ"> ウ　5/36</label>
-      <label><input type="radio" name="q6" value="エ" data-correct="true"> エ　1/6</label>
-      <label><input type="radio" name="q6" value="オ"> オ　7/36</label>
-      <label><input type="radio" name="q6" value="カ"> カ　2/9</label>
+      <label><input type="radio" name="q6"> ア　\(\dfrac{1}{12}\)</label>
+      <label><input type="radio" name="q6"> イ　\(\dfrac{1}{9}\)</label>
+      <label><input type="radio" name="q6"> ウ　\(\dfrac{5}{36}\)</label>
+      <label><input type="radio" name="q6" data-correct="true"> エ　\(\dfrac{1}{6}\)</label>
+      <label><input type="radio" name="q6"> オ　\(\dfrac{7}{36}\)</label>
+      <label><input type="radio" name="q6"> カ　\(\dfrac{2}{9}\)</label>
     </div>
   </div>
 
   <!-- Q7 -->
   <div class="question" data-question="7">
     <h2>第7問</h2>
-    <p>底面の半径が 3cm、高さが 4cm の円錐の表面積を求めなさい。ただし、円周率は π とする。</p>
+    <p>底面の半径が 3cm、高さが 4cm の円錐の表面積を求めなさい。ただし、円周率は \(\pi\) とする。</p>
     <div class="options">
-      <label><input type="radio" name="q7" value="ア"> ア　12π cm²</label>
-      <label><input type="radio" name="q7" value="イ"> イ　15π cm²</label>
-      <label><input type="radio" name="q7" value="ウ"> ウ　18π cm²</label>
-      <label><input type="radio" name="q7" value="エ"> エ　21π cm²</label>
-      <label><input type="radio" name="q7" value="オ" data-correct="true"> オ　24π cm²</label>
-      <label><input type="radio" name="q7" value="カ"> カ　30π cm²</label>
+      <label><input type="radio" name="q7"> ア　\(12\pi\ \text{cm}^2\)</label>
+      <label><input type="radio" name="q7"> イ　\(15\pi\ \text{cm}^2\)</label>
+      <label><input type="radio" name="q7"> ウ　\(18\pi\ \text{cm}^2\)</label>
+      <label><input type="radio" name="q7"> エ　\(21\pi\ \text{cm}^2\)</label>
+      <label><input type="radio" name="q7" data-correct="true"> オ　\(24\pi\ \text{cm}^2\)</label>
+      <label><input type="radio" name="q7"> カ　\(30\pi\ \text{cm}^2\)</label>
     </div>
   </div>
 
   <!-- Q8 -->
   <div class="question" data-question="8">
     <h2>第8問</h2>
-    <p>△ABC において、∠A の二等分線と辺 BC との交点を D とする。AB = 6cm, AC = 4cm, BC = 5cm のとき、線分 BD の長さを求めなさい。</p>
+    <p>△ABC において、∠A の二等分線と辺 BC との交点を D とする。\(AB = 6\text{cm},\ AC = 4\text{cm},\ BC = 5\text{cm}\) のとき、線分 BD の長さを求めなさい。</p>
     <div class="options">
-      <label><input type="radio" name="q8" value="ア"> ア　2cm</label>
-      <label><input type="radio" name="q8" value="イ"> イ　2.5cm</label>
-      <label><input type="radio" name="q8" value="ウ" data-correct="true"> ウ　3cm</label>
-      <label><input type="radio" name="q8" value="エ"> エ　3.5cm</label>
-      <label><input type="radio" name="q8" value="オ"> オ　4cm</label>
-      <label><input type="radio" name="q8" value="カ"> カ　4.5cm</label>
+      <label><input type="radio" name="q8"> ア　\(2\text{cm}\)</label>
+      <label><input type="radio" name="q8"> イ　\(2.5\text{cm}\)</label>
+      <label><input type="radio" name="q8" data-correct="true"> ウ　\(3\text{cm}\)</label>
+      <label><input type="radio" name="q8"> エ　\(3.5\text{cm}\)</label>
+      <label><input type="radio" name="q8"> オ　\(4\text{cm}\)</label>
+      <label><input type="radio" name="q8"> カ　\(4.5\text{cm}\)</label>
     </div>
   </div>
 
   <!-- Q9 -->
   <div class="question" data-question="9">
     <h2>第9問（発展）</h2>
-    <p>関数 y = (1/2)x² のグラフ上に 2 点 A, B があり、A(-4, 8), B(2, 2) である。また、同じグラフ上に点 P(t, (1/2)t²) をとる。ただし、t &gt; 0 とする。</p>
-    <p>三角形 OAB の面積と三角形 PAB の面積が等しくなるような、実数 t の値として正しいものを次の中から 1 つ選びなさい。</p>
+    <p>関数 \(y = \dfrac{1}{2}x^{2}\) のグラフ上に 2 点 \(A,B\) があり、\(A(-4,8),\ B(2,2)\) である。また、同じグラフ上に点 \(P\left(t,\dfrac{1}{2}t^{2}\right)\) をとる。ただし、\(t &gt; 0\) とする。</p>
+    <p>三角形 \(OAB\) の面積と三角形 \(PAB\) の面積が等しくなるような、実数 \(t\) の値として正しいものを次の中から 1 つ選びなさい。</p>
     <div class="options">
-      <label><input type="radio" name="q9" value="ア"> ア　t = 2</label>
-      <label><input type="radio" name="q9" value="イ"> イ　t = √10</label>
-      <label><input type="radio" name="q9" value="ウ"> ウ　t = -1 + √13</label>
-      <label><input type="radio" name="q9" value="エ" data-correct="true"> エ　t = -1 + √17</label>
-      <label><input type="radio" name="q9" value="オ"> オ　t = 5/2</label>
-      <label><input type="radio" name="q9" value="カ"> カ　t = 4</label>
+      <label><input type="radio" name="q9"> ア　\(t = 2\)</label>
+      <label><input type="radio" name="q9"> イ　\(t = \sqrt{10}\)</label>
+      <label><input type="radio" name="q9"> ウ　\(t = -1 + \sqrt{13}\)</label>
+      <label><input type="radio" name="q9" data-correct="true"> エ　\(t = -1 + \sqrt{17}\)</label>
+      <label><input type="radio" name="q9"> オ　\(t = \dfrac{5}{2}\)</label>
+      <label><input type="radio" name="q9"> カ　\(t = 4\)</label>
     </div>
   </div>
 
   <!-- Q10 -->
   <div class="question" data-question="10">
     <h2>第10問</h2>
-    <p>1辺の長さが 6cm の立方体 ABCD-EFGH がある。辺 AD の中点を M、辺 CD の中点を N とする。この立方体を 3 点 M, N, G を通る平面で切断するとき、頂点 C を含む方の立体の体積を求めなさい。</p>
+    <p>1辺の長さが 6cm の立方体 \(ABCD\text{-}EFGH\) がある。辺 AD の中点を M、辺 CD の中点を N とする。この立方体を 3 点 M, N, G を通る平面で切断するとき、頂点 C を含む方の立体の体積を求めなさい。</p>
     <div class="options">
-      <label><input type="radio" name="q10" value="ア"> ア　108cm³</label>
-      <label><input type="radio" name="q10" value="イ"> イ　126cm³</label>
-      <label><input type="radio" name="q10" value="ウ" data-correct="true"> ウ　153cm³</label>
-      <label><input type="radio" name="q10" value="エ"> エ　162cm³</label>
-      <label><input type="radio" name="q10" value="オ"> オ　180cm³</label>
-      <label><input type="radio" name="q10" value="カ"> カ　198cm³</label>
+      <label><input type="radio" name="q10"> ア　\(108\text{cm}^3\)</label>
+      <label><input type="radio" name="q10"> イ　\(126\text{cm}^3\)</label>
+      <label><input type="radio" name="q10" data-correct="true"> ウ　\(153\text{cm}^3\)</label>
+      <label><input type="radio" name="q10"> エ　\(162\text{cm}^3\)</label>
+      <label><input type="radio" name="q10"> オ　\(180\text{cm}^3\)</label>
+      <label><input type="radio" name="q10"> カ　\(198\text{cm}^3\)</label>
     </div>
   </div>
 
@@ -242,49 +260,92 @@
     <button id="resetBtn" onclick="resetTest()">リセット</button>
   </div>
 
-  <div id="result" class="result"></div>
-  <p class="note">※ 未回答の問題は不正解として扱われます。</p>
+  <p class="note">※ 採点すると結果ページ（result.html）に移動し、同時にスプレッドシートに記録されます。</p>
 
   <script>
+    // ★★★ Google Apps Script の Webアプリ URL をここに貼る ★★★
+    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyWvwMMe2fD_OgJXIs8kougNOrLQ4vtMSJ9Bm7o2IjaP-F8zCQ79APsVvlfPYnDeBDp/exec';
+
     function gradeTest() {
       const questions = document.querySelectorAll('.question');
-      let correctCount = 0;
       const total = questions.length;
+      const perQuestion = [];
+      let correctCount = 0;
 
-      questions.forEach(question => {
-        // 背景色リセット
-        question.classList.remove('correct-answer', 'wrong-answer');
-
+      questions.forEach((question, index) => {
         const correctInput = question.querySelector('input[type="radio"][data-correct="true"]');
         const checkedInput = question.querySelector('input[type="radio"]:checked');
 
-        if (!checkedInput) {
-          // 未回答は不正解扱い
-          question.classList.add('wrong-answer');
-        } else if (checkedInput === correctInput) {
-          correctCount++;
-          question.classList.add('correct-answer');
-        } else {
-          question.classList.add('wrong-answer');
+        let isCorrect = false;
+        let selectedLabel = '未解答';
+
+        if (checkedInput) {
+          selectedLabel = checkedInput.parentElement.textContent.trim();
+          if (checkedInput === correctInput) {
+            isCorrect = true;
+            correctCount++;
+          }
         }
+
+        perQuestion.push({
+          number: index + 1,
+          isCorrect: isCorrect,
+          selected: selectedLabel
+        });
       });
 
-      const score = Math.round((correctCount / total) * 100);
-      const resultDiv = document.getElementById('result');
-      resultDiv.textContent = `正解数：${correctCount} / ${total} 問　（得点：${score} 点）`;
+      const studentName = document.getElementById('studentName').value.trim();
+      const scorePerQuestion = 10;
+      const score = correctCount * scorePerQuestion;
+      const maxScore = total * scorePerQuestion;
+
+      const result = {
+        studentName: studentName,
+        correctCount: correctCount,
+        total: total,
+        score: score,
+        maxScore: maxScore,
+        perQuestion: perQuestion,
+        timestamp: new Date().toISOString()
+      };
+
+      // ローカルに保存（result.html で読み取る）
+      localStorage.setItem('edufit_last_result', JSON.stringify(result));
+
+      // スプレッドシートへ送信
+      sendResultToSpreadsheet(result);
+
+      // 結果ページへ遷移
+      window.location.href = 'result.html';
+    }
+
+    function sendResultToSpreadsheet(result) {
+      if (!GAS_ENDPOINT || GAS_ENDPOINT === 'YOUR_GAS_WEB_APP_URL_HERE') {
+        // まだURLを設定していない場合は何もしない
+        return;
+      }
+      fetch(GAS_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(result)
+      }).catch(err => {
+        console.error('送信エラー:', err);
+      });
     }
 
     function resetTest() {
       const questions = document.querySelectorAll('.question');
       questions.forEach(question => {
-        question.classList.remove('correct-answer', 'wrong-answer');
         const inputs = question.querySelectorAll('input[type="radio"]');
         inputs.forEach(input => {
           input.checked = false;
         });
       });
-      const resultDiv = document.getElementById('result');
-      resultDiv.textContent = '';
+      document.getElementById('studentName').value = '';
+      localStorage.removeItem('edufit_last_result');
     }
   </script>
 </body>
